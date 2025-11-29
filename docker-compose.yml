@@ -22,6 +22,7 @@ services:
     tty: true
     stdin_open: true
 
+ # ===============================
   hadoop-slave1:
     image: yassern1/hadoop-spark-jupyter:1.0.3
     container_name: hadoop-slave1
@@ -35,6 +36,7 @@ services:
     tty: true
     stdin_open: true
 
+ # ===============================
   hadoop-slave2:
     image: yassern1/hadoop-spark-jupyter:1.0.3
     container_name: hadoop-slave2
@@ -47,6 +49,19 @@ services:
     tty: true
     stdin_open: true
 
+ # ===============================
+  kafka-ui:
+    image: provectuslabs/kafka-ui:latest
+    container_name: kafka-ui
+    hostname: kafka-ui
+    networks:
+      - hadoop
+    ports:
+      - 8081:8080
+    environment:
+      - KAFKA_CLUSTERS_0_NAME=local
+      - KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS=hadoop-master:9092
+      - KAFKA_CLUSTERS_0_ZOOKEEPER=hadoop-master:2181 
 networks:
   hadoop:
     driver: bridge
